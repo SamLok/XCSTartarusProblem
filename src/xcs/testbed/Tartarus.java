@@ -79,27 +79,27 @@ public class Tartarus implements Environment<StringState, Tartarus.Action>{
 			e.printStackTrace();
 		}
 
-//		Random rnd = new Random();
-//
-//		do {
-//			y = 2 + rnd.nextInt(worldSize - 2);
-//			x = 2 + rnd.nextInt(worldSize - 2);
-//
-//		} while (world[y][x] == BLOCK);
-//
-//		switch (rnd.nextInt(4)) {
-//		case 0: orientation = AgentOrientation.NORTH; break;
-//		case 1: orientation = AgentOrientation.EAST; break;
-//		case 2: orientation = AgentOrientation.SOUTH; break;
-//		case 3: orientation = AgentOrientation.WEST; break;
-//		}
-		
+		//		Random rnd = new Random();
+		//
+		//		do {
+		//			y = 2 + rnd.nextInt(worldSize - 2);
+		//			x = 2 + rnd.nextInt(worldSize - 2);
+		//
+		//		} while (world[y][x] == BLOCK);
+		//
+		//		switch (rnd.nextInt(4)) {
+		//		case 0: orientation = AgentOrientation.NORTH; break;
+		//		case 1: orientation = AgentOrientation.EAST; break;
+		//		case 2: orientation = AgentOrientation.SOUTH; break;
+		//		case 3: orientation = AgentOrientation.WEST; break;
+		//		}
+
 		RandomisePosition();
 
 		//Set available number of movements that the agent can have
 		this.numSteps = numSteps;
 	}
-	
+
 	private void RandomisePosition(){
 		Random rnd = new Random();
 
@@ -135,7 +135,7 @@ public class Tartarus implements Environment<StringState, Tartarus.Action>{
 			if (world[world.length - 2][c] == BLOCK) score++;
 		}
 
-		return score;		
+		return score;
 	}
 
 	public boolean isValidPosition(int x, int y){
@@ -158,7 +158,7 @@ public class Tartarus implements Environment<StringState, Tartarus.Action>{
 
 		return new StringState(state.toString());
 	}
-	
+
 	@Override
 	public StringState getState() {
 		return getState(x, y);
@@ -173,44 +173,44 @@ public class Tartarus implements Environment<StringState, Tartarus.Action>{
 	}
 
 	public StringState[] MoveForward(){
-//		if(numSteps == 0) return Sensor();
-//		
-//		numSteps--;
-		
+		//		if(numSteps == 0) return Sensor();
+		//
+		//		numSteps--;
+
 		PerformMove();
 		return Sensor();
 	}
-	
+
 	public void PerformMove(){
 		StringState s = SenseUpperMiddle();
-		
+
 		if(s.getState() == WALL) return;
 		if(s.getState() == BLOCK && SenseBeyond().getState() != EMPTY) return;
-		
+
 		switch(orientation){
-        case NORTH: y++; break;
-        case EAST:  x++; break;
-        case SOUTH: y--; break;
-        case WEST:  x--; break;
+		case NORTH: y++; break;
+		case EAST:  x++; break;
+		case SOUTH: y--; break;
+		case WEST:  x--; break;
 		}
-		
+
 		if(s.getState() == BLOCK){
 			world[y][x] = EMPTY;
-			
+
 			switch(orientation){
-            case NORTH: world[y + 1][x] = BLOCK; break;
-            case EAST:  world[y][x + 1] = BLOCK; break;
-            case SOUTH: world[y - 1][x] = BLOCK; break;
-            case WEST:  world[y][x - 1] = BLOCK; break;
+			case NORTH: world[y + 1][x] = BLOCK; break;
+			case EAST:  world[y][x + 1] = BLOCK; break;
+			case SOUTH: world[y - 1][x] = BLOCK; break;
+			case WEST:  world[y][x - 1] = BLOCK; break;
 			}
 		}
-		
+
 	}
 
 	public StringState[] TurnLeft(){
-//		if(numSteps == 0) return Sensor();
+		//		if(numSteps == 0) return Sensor();
 
-//		numSteps--;
+		//		numSteps--;
 
 		switch(orientation){
 		case NORTH: orientation = AgentOrientation.WEST; break;
@@ -223,9 +223,9 @@ public class Tartarus implements Environment<StringState, Tartarus.Action>{
 	}
 
 	public StringState[] TurnRight(){
-//		if(numSteps == 0) return Sensor();
-//
-//		numSteps--;
+		//		if(numSteps == 0) return Sensor();
+		//
+		//		numSteps--;
 
 		switch(orientation){
 		case NORTH: orientation = AgentOrientation.EAST; break;
@@ -233,7 +233,7 @@ public class Tartarus implements Environment<StringState, Tartarus.Action>{
 		case SOUTH: orientation = AgentOrientation.WEST; break;
 		case WEST: orientation = AgentOrientation.NORTH; break;
 		}
-		return Sensor();		
+		return Sensor();
 	}
 
 	public StringState[] Sensor(){
@@ -252,110 +252,110 @@ public class Tartarus implements Environment<StringState, Tartarus.Action>{
 	}
 
 	private StringState SenseUpperMiddle(){
-        switch (orientation) {
-        case NORTH: return new StringState(world[y + 1][x]);
-        case EAST:  return new StringState(world[y][x + 1]);
-        case SOUTH: return new StringState(world[y - 1][x]);
-        case WEST:  default: return new StringState(world[y][x - 1]);
-        }
+		switch (orientation) {
+		case NORTH: return new StringState(world[y + 1][x]);
+		case EAST:  return new StringState(world[y][x + 1]);
+		case SOUTH: return new StringState(world[y - 1][x]);
+		case WEST:  default: return new StringState(world[y][x - 1]);
+		}
 	}
 
 	private StringState SenseUpperLeft(){
-        switch (orientation) {
-        case NORTH: return new StringState(world[y + 1][x - 1]);
-        case EAST:  return new StringState(world[y + 1][x + 1]);
-        case SOUTH: return new StringState(world[y - 1][x + 1]);
-        case WEST:  default: return new StringState(world[y - 1][x - 1]);
-        }
+		switch (orientation) {
+		case NORTH: return new StringState(world[y + 1][x - 1]);
+		case EAST:  return new StringState(world[y + 1][x + 1]);
+		case SOUTH: return new StringState(world[y - 1][x + 1]);
+		case WEST:  default: return new StringState(world[y - 1][x - 1]);
+		}
 	}
 
 	private StringState SenseUpperRight(){
-        switch (orientation) {
-        case NORTH: return new StringState(world[y + 1][x + 1]);
-        case EAST:  return new StringState(world[y - 1][x + 1]);
-        case SOUTH: return new StringState(world[y - 1][x - 1]);
-        case WEST:  default: return new StringState(world[y + 1][x - 1]);
-        }
+		switch (orientation) {
+		case NORTH: return new StringState(world[y + 1][x + 1]);
+		case EAST:  return new StringState(world[y - 1][x + 1]);
+		case SOUTH: return new StringState(world[y - 1][x - 1]);
+		case WEST:  default: return new StringState(world[y + 1][x - 1]);
+		}
 	}
 
 	private StringState SenseLeft(){
-        switch (orientation) {
-        case NORTH: return new StringState(world[y][x - 1]);
-        case EAST:  return new StringState(world[y + 1][x]);
-        case SOUTH: return new StringState(world[y][x + 1]);
-        case WEST:  default: return new StringState(world[y - 1][x]);
-        }
+		switch (orientation) {
+		case NORTH: return new StringState(world[y][x - 1]);
+		case EAST:  return new StringState(world[y + 1][x]);
+		case SOUTH: return new StringState(world[y][x + 1]);
+		case WEST:  default: return new StringState(world[y - 1][x]);
+		}
 	}
 
 	private StringState SenseRight(){
 		switch(orientation){
-        case NORTH: return new StringState(world[y][x + 1]);
-        case EAST:  return new StringState(world[y - 1][x]);
-        case SOUTH: return new StringState(world[y][x - 1]);
-        case WEST:  default: return new StringState(world[y + 1][x]);
-        }
+		case NORTH: return new StringState(world[y][x + 1]);
+		case EAST:  return new StringState(world[y - 1][x]);
+		case SOUTH: return new StringState(world[y][x - 1]);
+		case WEST:  default: return new StringState(world[y + 1][x]);
+		}
 	}
 
 	private StringState SenseLowerLeft(){
 		switch(orientation){
-        case NORTH: return new StringState(world[y - 1][x - 1]);
-        case EAST:  return new StringState(world[y + 1][x - 1]);
-        case SOUTH: return new StringState(world[y + 1][x + 1]);
-        case WEST:  default: return new StringState(world[y - 1][x + 1]);
-        }
+		case NORTH: return new StringState(world[y - 1][x - 1]);
+		case EAST:  return new StringState(world[y + 1][x - 1]);
+		case SOUTH: return new StringState(world[y + 1][x + 1]);
+		case WEST:  default: return new StringState(world[y - 1][x + 1]);
+		}
 	}
 
 	private StringState SenseLowerMiddle(){
 		switch(orientation){
-        case NORTH: return new StringState(world[y - 1][x]);
-        case EAST:  return new StringState(world[y][x - 1]);
-        case SOUTH: return new StringState(world[y + 1][x]);
-        case WEST:  default: return new StringState(world[y][x + 1]);
-        }
+		case NORTH: return new StringState(world[y - 1][x]);
+		case EAST:  return new StringState(world[y][x - 1]);
+		case SOUTH: return new StringState(world[y + 1][x]);
+		case WEST:  default: return new StringState(world[y][x + 1]);
+		}
 	}
 
 	private StringState SenseLowerRight(){
 		switch(orientation){
-        case NORTH: return new StringState(world[y - 1][x + 1]);
-        case EAST:  return new StringState(world[y - 1][x - 1]);
-        case SOUTH: return new StringState(world[y + 1][x - 1]);
-        case WEST:  default: return new StringState(world[y + 1][x + 1]);
-        }
+		case NORTH: return new StringState(world[y - 1][x + 1]);
+		case EAST:  return new StringState(world[y - 1][x - 1]);
+		case SOUTH: return new StringState(world[y + 1][x - 1]);
+		case WEST:  default: return new StringState(world[y + 1][x + 1]);
+		}
 	}
 
 	private StringState SenseBeyond(){
-        try {
-            switch (orientation) {
-            case NORTH: return new StringState(world[y + 2][x]);
-            case EAST:  return new StringState(world[y][x + 2]);
-            case SOUTH: return new StringState(world[y - 2][x]);
-            case WEST:  default: return new StringState(world[y][x - 2]);
-            }
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return new StringState(WALL);
-        }
+		try {
+			switch (orientation) {
+			case NORTH: return new StringState(world[y + 2][x]);
+			case EAST:  return new StringState(world[y][x + 2]);
+			case SOUTH: return new StringState(world[y - 2][x]);
+			case WEST:  default: return new StringState(world[y][x - 2]);
+			}
+		} catch (ArrayIndexOutOfBoundsException e) {
+			return new StringState(WALL);
+		}
 	}
 
 	public void PrintWorld(PrintStream out){
-        for (int r = world.length - 1; r >= 0; --r) {
-            for (int c = 0; c < world[r].length; ++c) {
-                if (r == y && c == x) {
-                    switch (orientation) {
-                    case NORTH: out.print("^"); break;
-                    case EAST: out.print(">"); break;
-                    case SOUTH: out.print("v"); break;
-                    case WEST: out.print("<"); break;
-                    }
-                } else {
-                    switch (world[r][c]) {
-                    case EMPTY: out.print("."); break;
-                    case BLOCK: out.print("*"); break;
-                    case WALL: out.print("#"); break;
-                    }
-                }
-            }
-            out.println();
-        }
+		for (int r = world.length - 1; r >= 0; --r) {
+			for (int c = 0; c < world[r].length; ++c) {
+				if (r == y && c == x) {
+					switch (orientation) {
+					case NORTH: out.print("^"); break;
+					case EAST: out.print(">"); break;
+					case SOUTH: out.print("v"); break;
+					case WEST: out.print("<"); break;
+					}
+				} else {
+					switch (world[r][c]) {
+					case EMPTY: out.print("."); break;
+					case BLOCK: out.print("*"); break;
+					case WALL: out.print("#"); break;
+					}
+				}
+			}
+			out.println();
+		}
 
 	}
 
@@ -364,8 +364,9 @@ public class Tartarus implements Environment<StringState, Tartarus.Action>{
 	public double getReward(StringState state, Action action) {
 		// TODO Auto-generated method stub
 		if(isFinalState(state)){
-//			return Score();
+			//			return Score();
 			RandomisePosition();
+			//			return 0;
 		}
 
 		if(action == Action.TURNLEFT ){
@@ -380,13 +381,14 @@ public class Tartarus implements Environment<StringState, Tartarus.Action>{
 			MoveForward();
 			numSteps--;
 		}
-		
-		
+
+
 		if(numSteps>=0) {
-			System.out.println(numSteps);
+			//			System.out.println(numSteps);
+
 			if(world[1][world.length-2] == BLOCK || world[1][1] == BLOCK
-					|| world[world.length-2][1] == BLOCK || world[world.length-2][world.length-2] == BLOCK){  
-						return 2;
+					|| world[world.length-2][1] == BLOCK || world[world.length-2][world.length-2] == BLOCK){
+				return 2;
 			}
 			else {
 				for (int r = 2; r < world.length - 1; ++r) {
@@ -401,14 +403,15 @@ public class Tartarus implements Environment<StringState, Tartarus.Action>{
 			}
 		}
 		else{
-			RandomisePosition();
-			numSteps = 80;
 			PrintWorld(System.out);
 			System.out.println(Score());
+
+			RandomisePosition();
+			numSteps = 80;
+
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -419,24 +422,24 @@ public class Tartarus implements Environment<StringState, Tartarus.Action>{
 	@Override
 	public boolean isFinalState(StringState state) {
 		// TODO Auto-generated method stub
-		int maxScore = 8 + (worldSize-4);		
+		int maxScore = 8 + (worldSize-4);
 		if(Score() == maxScore) return true;
 		else if(numSteps==0) return true;
-		
+
 		return false;
 	}
 
-	
+
 	public static int trials = 10;
 	public static int captureInterval = 50;
-	
+
 	public static void main(String[] args){
-//		Tartarus tartarus = new Tartarus(("data/" + "World01.txt"), 80);
-		
+		//		Tartarus tartarus = new Tartarus(("data/" + "World01.txt"), 80);
+
 		String[] tartarusFiles = {"World01.txt"};
 		String[] tartarusNames = {"6x6"};
-		int[] numberOfProblems = {5000, 7500, 5000, 10000, 20000, 8000, 8000, 8000, 10000};
-		
+		//		int[] numberOfProblems = {5000, 7500, 5000, 10000, 20000, 8000, 8000, 8000, 10000};
+		int[] numberOfProblems = {2};
 
 		//===============Algorithm====================
 		XCSConstantsBuilder constants = new XCSConstantsBuilder();
@@ -455,51 +458,50 @@ public class Tartarus implements Environment<StringState, Tartarus.Action>{
 		constants.setThetaDel(20);
 		constants.setDoGASubsumption(false);
 		constants.setDoActionSetSubsumption(false);
-		
+
 		int[] problems = {0};
-		
+
 		for(int file=0; file<problems.length; file++){
 			String tartarusFile = tartarusFiles[problems[file]];
 			String tartarusName = tartarusNames[problems[file]];
 			System.out.printf("Running on %s%n", tartarusName);
-			
+
 			Tartarus tartarus = new Tartarus(("data/" + tartarusFile), 80);
-			
+
 			tartarus.PrintWorld(System.out);
-			
+
 			StatsLogger crossTrialStats = new StatsLogger();
-			
+
 			UpdateMethod[] algos = new UpdateMethod[]{UpdateMethod.NORMAL};
-			
-			for(int z=0; z<algos.length; z++){
-				UpdateMethod type = algos[z];
-				String updateMethodName = type.toString();
-				StatsLogger logger = new StatsLogger();
-				constants.setUpdateMethod(type);
-				System.out.println("Type: " + type);
-				
-				for(int i=0; i<trials; i++){
-					XCS<StringState, StringCondition, Action> xcs = new XCS<StringState, StringCondition, Action>(constants.build(), Action.values());
-					xcs.runXCSMultistep(tartarus, numberOfProblems[problems[file]], Tartarus.captureInterval);
-					logger.logRun(xcs.getStats());
-					
-					System.out.printf("Run %d completed%n", i + 1);
-				}
-				
-				crossTrialStats.logTrial(logger.getStatsList());
-				
-				try{
-					logger.writeLogAndCSVFiles(String.format("log/csv/%s/%s/Trial <TRIAL_NUM>.csv", updateMethodName, tartarusName), String.format("log/datadump/%s/<TIMESTEP_NUM>.log", updateMethodName), "Average Number of Steps to Goal");
-					logger.writeChartsAsSinglePlot(String.format("log/charts/%s/%s/<CHART_TITLE>.png", updateMethodName, tartarusName), String.format("%s on %s", updateMethodName, tartarusName), "Average Number of Steps to Goal");
-				}
-				catch(IOException e){
-					e.printStackTrace();
-				}
+
+
+			UpdateMethod type = UpdateMethod.NORMAL;
+			String updateMethodName = type.toString();
+			StatsLogger logger = new StatsLogger();
+			constants.setUpdateMethod(type);
+			System.out.println("Type: " + type);
+
+			for(int i=0; i<trials; i++){
+				XCS<StringState, StringCondition, Action> xcs = new XCS<StringState, StringCondition, Action>(constants.build(), Action.values());
+				xcs.runXCSMultistep(tartarus, numberOfProblems[problems[file]], Tartarus.captureInterval);
+				logger.logRun(xcs.getStats());
+
+				System.out.printf("Run %d completed%n", i + 1);
 			}
-			
+
+			crossTrialStats.logTrial(logger.getStatsList());
+
+			try{
+				logger.writeLogAndCSVFiles(String.format("log/csv/%s/%s/Trial <TRIAL_NUM>.csv", updateMethodName, tartarusName), String.format("log/datadump/%s/<TIMESTEP_NUM>.log", updateMethodName), "Average Number of Steps to Goal");
+				logger.writeChartsAsSinglePlot(String.format("log/charts/%s/%s/<CHART_TITLE>.png", updateMethodName, tartarusName), String.format("%s on %s", updateMethodName, tartarusName), "Average Number of Steps to Goal");
+			}
+			catch(IOException e){
+				e.printStackTrace();
+			}
+
 			String[] names = new String[algos.length];
 			for(int i = 0;i < names.length;i ++){
-				names[i] = algos[i].toString();
+				names[i] = type.toString();
 			}
 
 			try{
@@ -509,9 +511,9 @@ public class Tartarus implements Environment<StringState, Tartarus.Action>{
 				e.printStackTrace();
 			}
 
-		
+
 		}
-		
+
 	}
 
 }
