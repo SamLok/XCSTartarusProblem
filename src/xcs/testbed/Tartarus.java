@@ -18,6 +18,7 @@ public class Tartarus implements Environment<StringState, Tartarus.Action>{
 	private enum AgentOrientation {NORTH, EAST, SOUTH, WEST}
 
 	private String[][] world;
+	private String[][] temp;
 
 	private final String EMPTY = "00";
 	private final String BLOCK = "01";
@@ -79,6 +80,7 @@ public class Tartarus implements Environment<StringState, Tartarus.Action>{
 			e.printStackTrace();
 		}
 
+		temp = world;
 		//		Random rnd = new Random();
 		//
 		//		do {
@@ -407,13 +409,14 @@ public class Tartarus implements Environment<StringState, Tartarus.Action>{
 			System.out.println(Score());
 
 			RandomisePosition();
+			world = temp;
 			numSteps = 80;
 
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+//			try {
+////				Thread.sleep(1000);
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
 		}
 
 		return 0;
@@ -431,7 +434,7 @@ public class Tartarus implements Environment<StringState, Tartarus.Action>{
 
 
 	public static int trials = 10;
-	public static int captureInterval = 50;
+	public static int captureInterval = 5;
 
 	public static void main(String[] args){
 		//		Tartarus tartarus = new Tartarus(("data/" + "World01.txt"), 80);
@@ -439,7 +442,7 @@ public class Tartarus implements Environment<StringState, Tartarus.Action>{
 		String[] tartarusFiles = {"World01.txt"};
 		String[] tartarusNames = {"6x6"};
 		//		int[] numberOfProblems = {5000, 7500, 5000, 10000, 20000, 8000, 8000, 8000, 10000};
-		int[] numberOfProblems = {2};
+		int[] numberOfProblems = {10};
 
 		//===============Algorithm====================
 		XCSConstantsBuilder constants = new XCSConstantsBuilder();
